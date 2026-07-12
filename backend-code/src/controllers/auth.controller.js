@@ -117,6 +117,15 @@ async function logoutUser(req, res){
 });
 }
 
+async function getLoggedInUser(req, res) {
+
+    return res.status(200).json({
+        success: true,
+        user: req.user
+    });
+
+}
 
 
-module.exports = {registerUser , loginUser ,logoutUser }
+
+module.exports = {registerUser , loginUser ,logoutUser , getLoggedInUser  }
