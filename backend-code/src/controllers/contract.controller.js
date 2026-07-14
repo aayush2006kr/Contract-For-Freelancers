@@ -1,4 +1,5 @@
 const contractModel = require("../models/contract.model")
+const { generateContractPDF } = require("../utils/pdfGenrator");
 
 
 async function createContract(req, res){
@@ -139,6 +140,8 @@ async function delContract(req, res) {
 }
 
 async function updateContract(req , res){
+
+
     const { id } = req.params;
 
     const {
@@ -206,6 +209,53 @@ async function updateContract(req , res){
     });
 }
 
+async function downloadContract(req , res){
+
+    const {id} = req.params;
+
+     const contract = await contractModel.findOne({
+        _id: id,
+        userId: req.user._id
+    });
+
+    if (!contract) {
+        return res.status(404).json({
+            success: false,
+            message: "Contract not found"
+        });
+    }
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=contract-${contract._id}.pdf`);
+
+    generateContractPDF(contract, res);
 
 
-module.exports = {createContract , getAllContracts , oneContract , delContract , updateContract}
+}
+
+async function previewContract(req , res){
+
+     const { id } = req.params;
+
+     const contract = await contractModel.findOne({
+        _id: id,
+        userId: req.user._id
+    });
+
+    if (!contract) {
+        return res.status(404).json({
+            success: false,
+            message: "Contract not found"
+        });
+    }
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `inline; filename=contract-${contract._id}.pdf`);
+
+    generateContractPDF(contract, res);
+    
+}
+
+
+
+module.exports = {createContract , getAllContracts , oneContract , delContract , updateContract ,downloadContract , previewContract}

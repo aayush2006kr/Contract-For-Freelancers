@@ -16,6 +16,12 @@ router.delete("/delete-contract/:id" , authMiddleware.authUser , contractControl
 router.put("/edit-contract/:id" , authMiddleware.authUser , contractControllers.updateContract)
 
 
+router.get("/download-contract/:id" , authMiddleware.authUser, contractControllers.downloadContract)
+
+router.get("/preview-contract/:id" , authMiddleware.authUser, contractControllers.previewContract )
+
+
+
 
 
 
