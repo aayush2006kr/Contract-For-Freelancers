@@ -5,3 +5,10 @@ backend-code/node_modules
 # Environment files
 backend-code/.env
 frontend-code/.env
+
+node_modules
+
+node_modules/
+.env
+dist/
+build/
