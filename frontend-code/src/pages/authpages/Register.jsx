@@ -1,9 +1,65 @@
 import { Link } from "react-router-dom";
 import { Eye, EyeOff, User, Mail, Lock } from "lucide-react";
 import { useState } from "react";
+import { registerUser } from "../../api/authApi";
+import { useNavigate } from "react-router-dom";
+
+
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
+
+  const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
+const navigate = useNavigate();
+
+    const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+  alert("Please fill all fields");
+  return;
+}
+
+if (formData.password !== formData.confirmPassword) {
+  alert("Passwords do not match");
+  return;
+}
+
+
+
+  try {
+    const userData = {
+  name: formData.name,
+  email: formData.email,
+  password: formData.password,
+};
+
+const response = await registerUser(userData);
+
+    alert(response.data.message);
+
+    navigate("/login");
+    
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-black px-4 py-8">
@@ -30,7 +86,9 @@ function Register() {
           </p>
         </div>
 
-        <form className="space-y-5">
+        <form className="space-y-5"
+        onSubmit={handleSubmit}
+        >
 
           {/* Name */}
           <div>
@@ -48,6 +106,9 @@ function Register() {
               />
 
               <input
+                value={formData.name}
+                onChange={handleChange}
+                    
                 id="name"
                 name="name"
                 type="text"
@@ -73,6 +134,8 @@ function Register() {
               />
 
               <input
+               value={formData.email}
+                onChange={handleChange}
                 id="email"
                 name="email"
                 type="email"
@@ -98,6 +161,8 @@ function Register() {
               />
 
               <input
+               value={formData.password}
+                onChange={handleChange}
                 id="password"
                 name="password"
                 type={showPassword ? "text" : "password"}
@@ -129,6 +194,8 @@ function Register() {
             </label>
 
             <input
+               value={formData.confirmPassword}
+                onChange={handleChange}
               id="confirmPassword"
               name="confirmPassword"
               type="password"
