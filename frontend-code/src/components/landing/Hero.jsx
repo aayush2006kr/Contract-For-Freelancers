@@ -24,7 +24,7 @@ function Hero() {
           </Link>
 
           <a
-            href="https://github.com/your-github-username/Contractify"
+            href="https://github.com/aayush2006kr/Contract-For-Freelancers"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-lg border border-neutral-700 bg-transparent px-8 py-3 font-medium text-neutral-300 transition-colors hover:bg-neutral-900"

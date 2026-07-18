@@ -67,7 +67,7 @@ function Footer() {
             <div className="flex flex-col gap-3 text-neutral-400">
 
               <a
-                href="https://github.com/yourusername/contractify"
+                href="https://github.com/aayush2006kr/Contract-For-Freelancers"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-white"
@@ -76,7 +76,7 @@ function Footer() {
               </a>
 
               <a
-                href="https://linkedin.com/in/your-profile"
+                href="https://www.linkedin.com/in/aayush-kumar-03b291348/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-white"
@@ -85,7 +85,7 @@ function Footer() {
               </a>
 
               <a
-                href="mailto:youremail@example.com"
+                href="mailto:hit.aayush2006@gmail.com"
                 className="transition-colors hover:text-white"
               >
                 Contact

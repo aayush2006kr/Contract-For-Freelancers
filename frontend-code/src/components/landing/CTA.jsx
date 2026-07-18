@@ -23,7 +23,7 @@ function CTA() {
           </Link>
 
           <a
-            href="https://github.com/yourusername/contractify"
+            href="https://github.com/aayush2006kr/Contract-For-Freelancers"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-lg border border-neutral-700 px-8 py-4 text-lg font-medium text-neutral-300 transition-all duration-300 hover:border-neutral-500 hover:bg-neutral-800 hover:text-white"
