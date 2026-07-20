@@ -8,8 +8,13 @@ import {
 import { useState } from "react";
 import { loginUser } from "../../api/authApi";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 
 function Login() {
+const value = useContext(AuthContext);
+const { login } = useContext(AuthContext);
+
 
   const [formData, setformData] = useState({
     email:"" ,
@@ -41,7 +46,14 @@ const handleSubmit = async (e) => {
   try {
   const response = await loginUser(formData);
 
-    alert("Logged in successfully")
+  alert("logged in succcessfully")
+  console.log(response.data)
+
+  login(response.data.user);
+
+  navigate("/dashboard");
+
+    
 } catch (error) {
   console.log(error);
 }
