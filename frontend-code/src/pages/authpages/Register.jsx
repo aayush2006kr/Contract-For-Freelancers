@@ -15,6 +15,8 @@ function Register() {
   password: "",
   confirmPassword: "",
 });
+
+
 const navigate = useNavigate();
 
     const handleChange = (e) => {

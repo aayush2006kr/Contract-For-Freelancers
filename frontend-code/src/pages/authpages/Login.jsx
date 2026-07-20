@@ -5,8 +5,54 @@ import {
   Eye,
   ArrowRight,
 } from "lucide-react";
+import { useState } from "react";
+import { loginUser } from "../../api/authApi";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+
+  const [formData, setformData] = useState({
+    email:"" ,
+    passoword:""
+
+  })
+
+  const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  setformData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+};
+
+
+const navigate = useNavigate();
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!formData.email || !formData.password) {
+  alert("Please fill all fields");
+  return;
+}
+
+
+  try {
+  const response = await loginUser(formData);
+
+    alert("Logged in successfully")
+} catch (error) {
+  console.log(error);
+}
+
+};
+
+
+
+
+
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-black px-4 text-neutral-200">
       <div className="w-full max-w-md">
@@ -27,7 +73,10 @@ function Login() {
 
         {/* Login Card */}
         <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-6 shadow-2xl">
-          <form className="space-y-4">
+          <form className="space-y-4"
+          
+            onSubmit={handleSubmit}
+          >
             {/* Email */}
             <div>
               <label
@@ -44,6 +93,10 @@ function Login() {
                 />
 
                 <input
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+
                   id="email"
                   type="email"
                   placeholder="you@example.com"
@@ -77,6 +130,10 @@ function Login() {
                 />
 
                 <input
+                   name="password"
+                  value={formData.passowrd}
+                  onChange={handleChange}
+
                   id="password"
                   type="password"
                   placeholder="••••••••"
