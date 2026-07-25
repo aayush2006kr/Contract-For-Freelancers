@@ -7,3 +7,7 @@ export const registerUser = (userData) => {
 export const loginUser = (userData)=>{
     return api.post("/auth/login", userData)
 }
+
+export const getCurrentUser = () => {
+    return api.get("/auth/me");
+};
