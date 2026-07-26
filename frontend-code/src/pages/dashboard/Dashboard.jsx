@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import Card from "../../components/dashboard/Card";
+import RecentContracts from "../../components/dashboard/RecentContracts";
 
 const Dashboard = () => {
   return (
@@ -44,6 +45,8 @@ const Dashboard = () => {
     icon={CircleCheckBig}
   />
 </section>
+
+     <RecentContracts />
 
         </div>
       </main>
