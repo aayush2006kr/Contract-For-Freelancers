@@ -1,18 +1,20 @@
+import Sidebar from "../../components/dashboard/Sidebar";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 
+import React from 'react'
+import Navbar from "../../components/dashboard/Navbar";
+
 const Dashboard = () => {
-  const { user, isAuthenticated } = useContext(AuthContext);
-
-  console.log(user);
-  console.log(isAuthenticated);
-
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <h2>Welcome {user.name}</h2>
-    </div>
-  );
-};
+     <div className="min-h-screen bg-black text-white">
 
-export default Dashboard;
+    <Sidebar />
+    <Navbar/>
+    
+    </div>
+  )
+}
+
+export default Dashboard
+
