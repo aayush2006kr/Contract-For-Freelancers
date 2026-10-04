@@ -4,6 +4,7 @@ import Landing from "../pages/Landing/Landing";
 import Login from "../pages/authpages/Login";
 import Register from "../pages/authpages/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
+import ContractCreate from "../pages/contracts/ContractCreate";
 import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
@@ -19,6 +20,14 @@ function AppRoutes() {
           <Dashboard />
             </ProtectedRoute>
         }/>
+      <Route
+        path="/contracts/new"
+        element={
+          <ProtectedRoute>
+            <ContractCreate />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

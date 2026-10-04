@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Plus } from "lucide-react";
 import AuthContext from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const WelcomeSection = () => {
   const { user } = useContext(AuthContext);
@@ -17,10 +18,10 @@ const WelcomeSection = () => {
         </p>
       </div>
 
-      <button className="flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+      <Link to="/contracts/new" className="flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
         <Plus size={18} />
         Create Contract
-      </button>
+      </Link>
     </section>
   );
 };

@@ -1,81 +1,40 @@
-import {
-  LayoutDashboard,
-  FileText,
-  User,
-  Settings,
-  LogOut,
-  Plus,
-} from "lucide-react";
+import { FileText, LayoutDashboard, Plus } from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
 
-const Sidebar = () => {
-  return (
-    <aside className="hidden md:flex h-screen w-64 fixed left-0 top-0 bg-neutral-900 border-r border-neutral-800 flex-col py-4 z-20">
-      {/* Logo */}
-      <div className="px-6 mb-8 mt-3">
-        <h1 className="text-xl font-bold text-white tracking-tight">
-          Contractify
-        </h1>
+const navClass = ({ isActive }) =>
+  `flex items-center gap-3 rounded-lg px-4 py-3 transition-colors ${
+    isActive
+      ? "border-l-4 border-white bg-white/10 text-white"
+      : "text-neutral-400 hover:bg-neutral-800 hover:text-white"
+  }`;
 
-        <p className="font-mono text-xs font-medium text-neutral-400 mt-2 tracking-widest uppercase">
-          Freelancer Pro
-        </p>
+const Sidebar = () => (
+  <aside className="fixed left-0 top-0 z-20 hidden h-screen w-64 flex-col border-r border-neutral-800 bg-neutral-900 py-4 md:flex">
+    <div className="mb-8 mt-3 px-6">
+      <Link to="/" className="text-xl font-bold tracking-tight text-white">Contractify</Link>
+      <p className="mt-2 font-mono text-xs font-medium uppercase tracking-widest text-neutral-400">Freelancer Pro</p>
+    </div>
+
+    <nav className="flex-1 space-y-1 px-3" aria-label="Main navigation">
+      <NavLink to="/dashboard" end className={navClass}>
+        <LayoutDashboard size={20} /><span className="text-sm font-medium">Dashboard</span>
+      </NavLink>
+      <NavLink to="/dashboard#contracts" className={navClass}>
+        <FileText size={20} /><span className="text-sm font-medium">Contracts</span>
+      </NavLink>
+    </nav>
+
+    <div className="mt-auto space-y-4 px-3">
+      <Link to="/contracts/new" className="flex w-full items-center justify-center gap-2 rounded-lg bg-white py-3 text-sm font-medium text-black transition-opacity hover:opacity-90">
+        <Plus size={18} /><span>Create Contract</span>
+      </Link>
+      <div className="flex justify-between px-2 text-xs text-neutral-500">
+        <Link to="/" className="hover:text-white">Home</Link>
+        <Link to="/login" className="hover:text-white">Login</Link>
+        <Link to="/register" className="hover:text-white">Sign up</Link>
       </div>
-
-      {/* Navigation */}
-      <nav className="flex-1 px-3 space-y-1">
-        <a
-          href="#"
-          className="flex items-center gap-3 px-4 py-3 text-white bg-white/10 border-l-4 border-white rounded-r-lg"
-        >
-          <LayoutDashboard size={20} />
-
-          <span className="text-sm font-medium">Dashboard</span>
-        </a>
-
-        <a
-          href="#"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors"
-        >
-          <FileText size={20} />
-
-          <span>Contracts</span>
-        </a>
-
-        <a
-          href="#"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors"
-        >
-          <User size={20} />
-
-          <span>Profile</span>
-        </a>
-
-        <a
-          href="#"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors"
-        >
-          <Settings size={20} />
-
-          <span>Settings</span>
-        </a>
-      </nav>
-
-      {/* Bottom Section */}
-      <div className="px-3 mt-auto space-y-4">
-        <button className="w-full flex items-center justify-center gap-2 bg-white text-black py-3 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
-          <Plus size={18} />
-
-          <span>Create Contract</span>
-        </button>
-
-        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-red-400 transition-colors">
-          <LogOut size={20} />
-
-          <span>Logout</span>
-        </button>
-      </div>
-    </aside>
-  );
-};
+    </div>
+  </aside>
+);
 
 export default Sidebar;

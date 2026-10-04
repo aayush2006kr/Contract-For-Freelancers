@@ -2,7 +2,7 @@ import { Menu } from "lucide-react";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 
-const Navbar = () => {
+const Navbar = ({ title = "Dashboard" }) => {
   const { user } = useContext(AuthContext);
 
   return (
@@ -15,7 +15,7 @@ const Navbar = () => {
         </button>
 
         <h2 className="text-xl font-semibold text-white">
-          Dashboard
+          {title}
         </h2>
       </div>
 

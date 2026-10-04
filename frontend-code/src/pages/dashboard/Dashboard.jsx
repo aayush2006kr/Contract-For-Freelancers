@@ -1,58 +1,67 @@
-import Sidebar from "../../components/dashboard/Sidebar";
-import { useContext } from "react";
-import AuthContext from "../../context/AuthContext";
-import React from 'react'
-import Navbar from "../../components/dashboard/Navbar";
-import WelcomeSection from "../../components/dashboard/WelcomeSection";
-import {
-  FileText,
-  FilePenLine,
-  CircleCheckBig,
-} from "lucide-react";
-
+import { useCallback, useEffect, useState } from "react";
+import { Archive, CircleCheckBig, FilePenLine, FileText } from "lucide-react";
 import Card from "../../components/dashboard/Card";
+import Navbar from "../../components/dashboard/Navbar";
 import RecentContracts from "../../components/dashboard/RecentContracts";
+import Sidebar from "../../components/dashboard/Sidebar";
+import WelcomeSection from "../../components/dashboard/WelcomeSection";
+import { getAllContracts } from "../../api/contractApi";
 
 const Dashboard = () => {
+  const [contracts, setContracts] = useState([]);
+  const [loadingContracts, setLoadingContracts] = useState(true);
+  const [contractsError, setContractsError] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
+
+  const fetchContracts = useCallback(async () => {
+    try {
+      const response = await getAllContracts();
+      setContracts(Array.isArray(response.data?.contracts) ? response.data.contracts : []);
+    } catch (error) {
+      setContractsError(error.response?.data?.message || "We couldn’t load your contracts. Check your connection and try again.");
+    } finally {
+      setLoadingContracts(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const request = window.setTimeout(() => fetchContracts(), 0);
+    return () => window.clearTimeout(request);
+  }, [fetchContracts, reloadKey]);
+
+  const retryContracts = () => {
+    setLoadingContracts(true);
+    setContractsError("");
+    setReloadKey((key) => key + 1);
+  };
+
+  const statusCount = (status) => contracts.filter((contract) => contract.status === status).length;
+
   return (
-     <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white">
       <Sidebar />
       <Navbar title="Dashboard" />
-
-      <main className="md:ml-64 pt-16">
-        <div className="max-w-7xl mx-auto px-6 py-8">
+      <main className="pt-16 md:ml-64">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
           <WelcomeSection />
 
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-  <Card
-    title="Total Contracts"
-    value={142}
-    subtitle="All contracts"
-    icon={FileText}
-  />
+          <section aria-label="Contract summary" className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+            <Card title="Total Contracts" value={loadingContracts || contractsError ? "—" : contracts.length} subtitle="All saved contracts" icon={FileText} />
+            <Card title="Draft" value={loadingContracts || contractsError ? "—" : statusCount("Draft")} subtitle="Saved as drafts" icon={FilePenLine} />
+            <Card title="Final" value={loadingContracts || contractsError ? "—" : statusCount("Final")} subtitle="Final contracts" icon={CircleCheckBig} />
+            <Card title="Archived" value={loadingContracts || contractsError ? "—" : statusCount("Archived")} subtitle="Archived contracts" icon={Archive} />
+          </section>
 
-  <Card
-    title="Draft Contracts"
-    value={24}
-    subtitle="Pending completion"
-    icon={FilePenLine}
-  />
-
-  <Card
-    title="Completed"
-    value={118}
-    subtitle="Ready to download"
-    icon={CircleCheckBig}
-  />
-</section>
-
-     <RecentContracts />
-
+          <RecentContracts
+            contracts={contracts}
+            loading={loadingContracts}
+            error={contractsError}
+            onRetry={retryContracts}
+          />
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
-
+export default Dashboard;
